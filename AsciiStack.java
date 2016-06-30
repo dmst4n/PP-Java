@@ -27,7 +27,7 @@ public class AsciiStack{
 		AsciiImage aiTemp = this.peek();
 		aiArray[this.size()-1] = null;
 
-		if((this.size() -1)< this.capacity() - increment){
+		if((this.size() -1) < this.capacity() - increment && (this.capacity() - increment) > 0){
 			AsciiImage[] aiTempArray = new AsciiImage[this.size()-increment];
 			System.arraycopy(aiArray,0,aiTempArray,0,aiTempArray.length);
 			aiArray = aiTempArray;
@@ -39,6 +39,7 @@ public class AsciiStack{
 
 	public AsciiImage peek(){
 		if(this.empty()){
+			System.out.println("Stack is empty");
 			return null;
 		}else{
 			return aiArray[this.size()-1];
@@ -65,5 +66,12 @@ public class AsciiStack{
 		}
 
 		aiArray[this.size()]=img;
+		System.out.println(img.toString());
+	}
+
+	public void showAll(){
+		for(int i = 0; i < this.size(); i++){
+			System.out.println(aiArray[i].toString());
+		}
 	}
 }

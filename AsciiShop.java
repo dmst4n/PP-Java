@@ -175,6 +175,7 @@ public class AsciiShop{
 
 			}else if(scanFill.hasNext("undo")){
 				sTemp = scanFill.nextLine();
+				//asStack.showAll();
 				System.out.println("Capacity: " + asStack.capacity() + " Size: " + asStack.size());
 				aiImage = asStack.pop();
 				System.out.println(aiImage.toString());
