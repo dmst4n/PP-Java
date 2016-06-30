@@ -8,14 +8,18 @@ public class AsciiImage{
 	public AsciiImage(int iWidth, int iHeight){
 		this.iHeight = iHeight;
 		this.iWidth = iWidth;
-		cImage = new char[iHeight][iWidth];
+		cImage = new char[iWidth][iHeight];
 		this.clear();
 	}
 
 	public AsciiImage(AsciiImage img){
-		for(int i = 0; i<iHeight; i++){
-			for(int j = 0; j<iWidth; j++){
-				this.setPixel(j,i,this.getPixel(j,i));
+		this.iHeight = img.iHeight;
+		this.iWidth = img.iWidth;
+		cImage = new char[img.iWidth][img.iHeight];
+
+		for(int i = 0; i<iWidth; i++){
+			for(int j = 0; j<iHeight; j++){
+				cImage[i][j] = img.getPixel(i,j);
 			}
 		}
 	}
@@ -23,16 +27,18 @@ public class AsciiImage{
 	public void clear(){
 		for(int i = 0; i < iWidth; i++){
 			for(int j = 0; j < iHeight; j++){
-				cImage[j][i]='.';
+				cImage[i][j]='.';
 			}
 		}
 	}
 
 	public String toString(){
+
 		String sTemp = "";
+
 		for(int i = 0; i < iHeight; i++){
 			for(int j = 0; j < iWidth; j++){
-				sTemp+=this.cImage[i][j];
+				sTemp+=this.cImage[j][i];
 			}
 			sTemp+="\n";
 		}
@@ -40,7 +46,7 @@ public class AsciiImage{
 	}
 
 	public char getPixel(int x, int y){
-		return cImage[y][x];
+		return cImage[x][y];
 	}
 
 	public char getPixel(AsciiPoint p){
@@ -56,11 +62,13 @@ public class AsciiImage{
 	}
 
 	public ArrayList<AsciiPoint> getPointList(char c){
+
 		ArrayList<AsciiPoint> alPoint = new ArrayList<AsciiPoint>();
-		for(int i = 0; i < iHeight; i++){
-			for(int j = 0; j < iWidth; j++){
+
+		for(int i = 0; i < iWidth; i++){
+			for(int j = 0; j < iHeight; j++){
 				if(cImage[i][j]==c){
-					AsciiPoint apTemp = new AsciiPoint(j,i);
+					AsciiPoint apTemp = new AsciiPoint(i,j);
 					alPoint.add(apTemp);
 				}
 			}
@@ -91,7 +99,7 @@ public class AsciiImage{
 	}
 
 	public void setPixel(int x, int y, char c){
-		cImage[y][x] = c;
+		cImage[x][y] = c;
 	}
 
 	public void setPixel(AsciiPoint p, char c){
@@ -99,8 +107,8 @@ public class AsciiImage{
 	}
 
 	public void replace(char oldChar, char newChar){
-		for(int i = 0; i < iHeight; i++){
-			for(int j = 0; j < iWidth; j++){
+		for(int i = 0; i < iWidth; i++){
+			for(int j = 0; j < iHeight; j++){
 				if(cImage[i][j]==oldChar){
 					this.cImage[i][j] = newChar;
 				}
@@ -168,17 +176,17 @@ public class AsciiImage{
 	public void transpose(){
 		char[][] cTemp = new char[iHeight][iWidth];
 
-		for(int i = 0; i<iHeight; i++){
-			for(int j = 0; j<iWidth;j++){				
-				cTemp[i][iWidth-j-1]=this.getPixel(j,i);
+		for(int i = 0; i<iWidth; i++){
+			for(int j = 0; j<iHeight;j++){				
+				cTemp[j][i]=this.getPixel(j,i);
 			}			
 		}
 
-		for(int i = 0; i<iHeight; i++){
-			for(int j = 0; j<iWidth;j++){
-				this.setPixel(j,i,cTemp[i][j]);
-			}			
-		}			
+		cImage = cTemp;
+
+		int cache = iHeight;
+		iHeight = iWidth;
+		iWidth = cache;			
 	}
 
 	public void growRegion(char c){

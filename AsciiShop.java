@@ -131,7 +131,7 @@ public class AsciiShop{
 				System.out.println(asStack.peek().toString());
 
 			}else if(scanFill.hasNext("clear")){
-				sTemp = scanFill.nextLine();
+				sTemp = scanFill.next();
 				aiImage.clear();
 				asStack.push(aiImage);
 
@@ -174,19 +174,18 @@ public class AsciiShop{
 				asStack.push(aiImage);
 
 			}else if(scanFill.hasNext("undo")){
-				sTemp = scanFill.nextLine();
-				//asStack.showAll();
-				System.out.println("Capacity: " + asStack.capacity() + " Size: " + asStack.size());
+				sTemp = scanFill.next();
 				aiImage = asStack.pop();
-				System.out.println(aiImage.toString());
 
 			}else if(scanFill.hasNext("grow")){
 				sTemp = scanFill.next();
 				cSym1 = scanFill.next().charAt(0);
 				aiImage.growRegion(cSym1);
 				asStack.push(aiImage);
-				
-				System.out.println(asStack.peek().toString());
+
+			}else if(scanFill.hasNext("show")){
+				sTemp = scanFill.next();
+				asStack.showAll();
 
 			}else{	
 				bErr = true;			

@@ -28,7 +28,7 @@ public class AsciiStack{
 		aiArray[this.size()-1] = null;
 
 		if((this.size() -1) < this.capacity() - increment && (this.capacity() - increment) > 0){
-			AsciiImage[] aiTempArray = new AsciiImage[this.size()-increment];
+			AsciiImage[] aiTempArray = new AsciiImage[this.capacity()-increment];
 			System.arraycopy(aiArray,0,aiTempArray,0,aiTempArray.length);
 			aiArray = aiTempArray;
 		}
@@ -39,7 +39,6 @@ public class AsciiStack{
 
 	public AsciiImage peek(){
 		if(this.empty()){
-			System.out.println("Stack is empty");
 			return null;
 		}else{
 			return aiArray[this.size()-1];
@@ -48,7 +47,7 @@ public class AsciiStack{
 
 	public int size(){
 		int n = 0;
-		for(int i = 0; i < this.capacity(); i++){
+		for(int i = 0; i < aiArray.length; i++){
 			if(aiArray[i]!=null){
 				n++;
 			}else{
@@ -59,19 +58,20 @@ public class AsciiStack{
 	}
 
 	public void push(AsciiImage img){
-		if(this.size()>=this.capacity()){
-			AsciiImage[] aiTempArray = new AsciiImage[this.size()+increment];
+		int iTemp = this.size();
+		if(this.size()+1>this.capacity()){
+			AsciiImage[] aiTempArray = new AsciiImage[this.capacity()+increment];
 			System.arraycopy(aiArray,0,aiTempArray,0,aiArray.length);
 			aiArray = aiTempArray;
 		}
 
-		aiArray[this.size()]=img;
-		System.out.println(img.toString());
+		aiArray[iTemp]= new AsciiImage(img);
+				
 	}
 
 	public void showAll(){
 		for(int i = 0; i < this.size(); i++){
-			System.out.println(aiArray[i].toString());
+			System.out.println("Pos:" + i + "\n" + aiArray[i].toString());
 		}
 	}
 }
